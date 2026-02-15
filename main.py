@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
+import uuid
 import random
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -20,6 +21,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+sessions = {}
 
 
 # --- Datenmodell ---
@@ -51,9 +54,19 @@ questions = [
 
 
 @app.get("/question")
-def get_question():
+def get_question(session_id: str = Query(None)):
+    # Neue Session erstellen falls keine existiert
+    if not session_id:
+        session_id = str(uuid.uuid4())
+        sessions[session_id] = []
+
     question = random.choice(questions)
-    return {"id": question["id"], "question": question["question"], "options": question["options"]}
+    return {
+        "id": question["id"],
+        "question": question["question"],
+        "options": question["options"],
+        "session_id": session_id,
+    }
 
 
 @app.post("/answer")
