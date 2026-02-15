@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiplayer Quiz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Multiplayer Quiz</h1>
+
+    <!-- SETUP -->
+    <div id="setup">
+        <h3>Spieler hinzufügen</h3>
+        <input type="text" id="playerName" placeholder="Spielername">
+        <button onclick="addPlayer()">Hinzufügen</button>
+
+        <ul id="playerList"></ul>
+
+        <label>Fragen pro Spieler:</label>
+        <input type="number" id="questionCount" value="3" min="1" max="20">
+
+        <br><br>
+        <button onclick="startGame()">Spiel starten</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quiz" style="display:none;">
+        <h2 id="currentPlayer"></h2>
+        <h3 id="questionText"></h3>
+        <div id="answers"></div>
+        <p id="feedback"></p>
+        <p id="explanation" style="display:none;"></p>
+        <button id="continueBtn" style="display:none;" onclick="nextTurn()">Weiter</button>
+    </div>
+
+    <!-- RESULT -->
+    <div id="result" style="display:none;">
+        <h2>Spiel beendet!</h2>
+        <div id="finalScores"></div>
+        <button onclick="restart()">Neu starten</button>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
