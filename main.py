@@ -201,7 +201,6 @@ def get_question(session_id: str = Query(None)):
     exp_sess = [k for k, v in sessions.items() if v["date"] <= datetime.now()]
     for i in exp_sess:
         del sessions[i]
-    print(sessions)
 
     question = random.choice(questions)
     while question["id"] in sessions[session_id]["played"]:
@@ -215,7 +214,6 @@ def get_question(session_id: str = Query(None)):
         question = random.choice(questions)
 
     sessions[session_id]["played"].add(question["id"])
-    print(sessions[session_id]["played"])
     return {
         "id": question["id"],
         "question": question["question"],
