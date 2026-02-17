@@ -6,6 +6,7 @@ let totalRounds = 0;
 let currentRound = 0;
 let currentPlayerIndex = 0;
 let currentQuestionData = null;
+let session_id = "";
 
 function addPlayer() {
     const nameInput = document.getElementById("playerName");
@@ -60,9 +61,10 @@ async function loadQuestion() {
 
     document.getElementById("feedback").innerText = "";
 
-    const response = await fetch(`${API_URL}/question`);
+    const response = await fetch(`${API_URL}/question?session_id=${session_id}`);
     const data = await response.json();
     currentQuestionData = data;
+    session_id = data.session_id
 
     const currentPlayer = players[currentPlayerIndex];
 
@@ -156,4 +158,5 @@ function restart() {
     players.forEach(p => p.score = 0);
     document.getElementById("setup").style.display = "block";
     document.getElementById("result").style.display = "none";
+    session_id = "";
 }
